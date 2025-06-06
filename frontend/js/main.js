@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     try {
-      const response = await fetch('https://my-website-backend-9nzb.onrender.com/api/contact', {
+      const response = await fetch('https://my-personal-website-dr5o.onrender.com/api/contact', {
 
         method: 'POST',
         headers: {
