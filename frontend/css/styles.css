@@ -1,9 +1,0 @@
-/* styles.css */
-
-/* Smooth scroll behavior (redundant if already in <html> but included for completeness) */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom overrides if necessary */
-
