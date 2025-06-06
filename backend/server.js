@@ -1,11 +1,14 @@
 
 // backend/server.js
 
-require('dotenv').config();          // Load .env variables
 const express = require('express');
 const cors = require('cors');
-const { body, validationResult, sanitizeBody } = require('express-validator');
+const dotenv = require('dotenv');
+const { body, validationResult } = require('express-validator');
 const nodemailer = require('nodemailer');
+
+// Load .env variables
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
