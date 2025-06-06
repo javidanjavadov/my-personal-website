@@ -2,213 +2,412 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Ensure correct viewport scaling on mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Javidan Javadov | Black Portfolio & CV</title>
+  <meta name="description" content="Professional portfolio and CV of Javidan Javadov, showcasing skills, experience, project, and contact." />
 
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Modern, responsive website with Home, About, Services, and Contact sections. Built with Tailwind CSS and vanilla JS.">
-  <meta name="keywords" content="responsive, HTML, Tailwind, JavaScript, Node.js, Express, contact form">
-  <meta name="author" content="Your Name">
-
-  <title>My Modern Website</title>
+  <!-- Google Fonts: Orbitron for header, Poppins for body -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-  <!-- Custom CSS (if needed) -->
-  <link rel="stylesheet" href="css/styles.css">
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
+  <style>
+    html {
+      scroll-behavior: smooth;
+      background-color: #000000; /* Black background */
+    }
+    /* Scrollbar for dark theme */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1f1f1f;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #333333;
+      border-radius: 4px;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800 leading-relaxed">
+<body class="bg-black text-gray-200 font-poppins leading-relaxed">
 
-  <!-- ============================= -->
-  <!-- Navigation (Semantic and Accessible) -->
-  <!-- ============================= -->
-  <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-50">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <a href="#home" class="text-2xl font-bold text-blue-600">MyWebsite</a>
-      <ul class="hidden md:flex space-x-6">
-        <li><a href="#home" class="hover:text-blue-500">Home</a></li>
-        <li><a href="#about" class="hover:text-blue-500">About</a></li>
-        <li><a href="#services" class="hover:text-blue-500">Services</a></li>
-        <li><a href="#contact" class="hover:text-blue-500">Contact</a></li>
-      </ul>
-      <!-- Mobile menu button -->
-      <button id="mobile-menu-button" class="md:hidden focus:outline-none" aria-label="Toggle menu">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
-        </svg>
-      </button>
-    </div>
-    <!-- Mobile menu (hidden by default) -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white">
-      <ul class="flex flex-col space-y-2 px-4 py-4">
-        <li><a href="#home" class="hover:text-blue-500 block">Home</a></li>
-        <li><a href="#about" class="hover:text-blue-500 block">About</a></li>
-        <li><a href="#services" class="hover:text-blue-500 block">Services</a></li>
-        <li><a href="#contact" class="hover:text-blue-500 block">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- Spacer to account for fixed nav -->
-  <div class="h-16"></div>
-
-  <!-- ============================= -->
-  <!-- Home Section -->
-  <!-- ============================= -->
-  <header id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-purple-700 text-white text-center">
-    <div data-aos="fade-up">
-      <h1 class="text-5xl md:text-6xl font-extrabold mb-4">Welcome to MyWebsite</h1>
-      <p class="text-xl md:text-2xl">We build beautiful, responsive websites.</p>
-      <a href="#about" class="inline-block mt-8 bg-white text-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-blue-100 transition">Learn More</a>
+  <!-- HEADER & NAVIGATION -->
+  <header class="sticky top-0 bg-black shadow-lg z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <!-- Logo / Name -->
+      <div class="text-3xl text-red-500" style="font-family: 'Orbitron', sans-serif;">
+        javo.
+      </div>
+      <!-- Navigation -->
+      <nav class="space-x-6 text-base sm:text-lg font-semibold text-gray-200">
+        <a href="#hero" class="hover:text-red-500 transition">Home</a>
+        <a href="#about" class="hover:text-red-500 transition">About</a>
+        <a href="#experience" class="hover:text-red-500 transition">Experience</a>
+        <a href="#education" class="hover:text-red-500 transition">Education</a>
+        <a href="#skills" class="hover:text-red-500 transition">Skills</a>
+        <a href="#project" class="hover:text-red-500 transition">Project</a>
+        <a href="#contact" class="hover:text-red-500 transition">Contact</a>
+      </nav>
     </div>
   </header>
+  <!-- END HEADER & NAVIGATION -->
 
-  <!-- ============================= -->
-  <!-- About Section -->
-  <!-- ============================= -->
-  <section id="about" class="py-20 bg-white">
-    <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-12" data-aos="fade-up">About Us</h2>
-      <div class="flex flex-col md:flex-row items-center gap-8">
-        <img src="https://via.placeholder.com/300" alt="About image" class="w-64 h-64 object-cover rounded-full shadow-md mx-auto md:mx-0" data-aos="fade-right">
-        <p class="text-lg leading-relaxed" data-aos="fade-left">
-          We are a team of experienced developers and designers focused on creating modern, fully responsive websites that follow best UI/UX practices.  
-          Our mission is to deliver clean, accessible, and SEO-friendly code that scales across all device sizes.  
-          From concept to deployment, we handle every step to ensure your online presence stands out.
-        </p>
-      </div>
+  <!-- HERO SECTION -->
+  <section id="hero" class="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-black to-gray-900 text-white text-center px-6">
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4">Hello, I'm Javidan Javadov</h1>
+    <p class="text-xl sm:text-2xl lg:text-3xl mb-6">Junior Software Developer & UI/UX Designer</p>
+    <p class="text-base sm:text-lg lg:text-xl max-w-2xl mb-8">
+      Building clean, user-centric web applications and intuitive interfaces. Let’s work together to create impactful solutions.
+    </p>
+    <div class="flex space-x-4">
+      <a href="#contact" class="bg-red-500 hover:bg-red-700 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold transition">
+        Contact Me
+      </a>
+      <a href="./Javidan Javadov CV.pdf" target="_blank" class="border border-red-500 hover:bg-red-500 hover:text-black text-red-500 px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold transition">
+        Download CV
+      </a>
     </div>
   </section>
+  <!-- END HERO SECTION -->
 
-  <!-- ============================= -->
-  <!-- Services Section -->
-  <!-- ============================= -->
-  <section id="services" class="py-20 bg-gray-100">
-    <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-12" data-aos="fade-up">Our Services</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Service Card 1 -->
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition" data-aos="zoom-in">
-          <div class="text-blue-600 text-4xl mb-4 text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16h8m-8-4h8m-8-4h8M4 6h.01M4 10h.01M4 14h.01M4 18h.01" />
-            </svg>
-          </div>
-          <h3 class="text-2xl font-semibold mb-2 text-center">Custom Web Development</h3>
-          <p class="text-gray-600 text-center">Bespoke front-end and back-end solutions using modern frameworks and best practices.</p>
+  <main class="space-y-32">
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="max-w-4xl mx-auto py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-center text-red-500">About Me</h2>
+      <div class="flex flex-col md:flex-row items-center md:items-start space-y-8 md:space-y-0 md:space-x-12">
+        <!-- Profile Image -->
+        <div class="flex-shrink-0">
+          <img src="https://media.licdn.com/dms/image/v2/D4E03AQFmd6r9avKthQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1725186289842?e=1754524800&v=beta&t=0WaTQhoBE9grHyHJZeNSp3g1MfhTPnuIQ6iCHhtrRKI"
+               alt="Javidan Javadov"
+               class="rounded-full border-4 border-red-500 w-48 h-48 object-cover shadow-lg">
         </div>
-        <!-- Service Card 2 -->
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition" data-aos="zoom-in" data-aos-delay="100">
-          <div class="text-blue-600 text-4xl mb-4 text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v2a2 2 0 002 2h2a2 2 0 002-2v-2m-6-6h6m-6-4h6m-6 8h6m-8 4h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <h3 class="text-2xl font-semibold mb-2 text-center">UI/UX Design</h3>
-          <p class="text-gray-600 text-center">User-centered design approach with wireframes, prototypes, and usability testing.</p>
-        </div>
-        <!-- Service Card 3 -->
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition" data-aos="zoom-in" data-aos-delay="200">
-          <div class="text-blue-600 text-4xl mb-4 text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v18H3V3z M7 7h10v10H7V7z" />
-            </svg>
-          </div>
-          <h3 class="text-2xl font-semibold mb-2 text-center">SEO & Performance</h3>
-          <p class="text-gray-600 text-center">On-page SEO, performance optimization, and accessibility compliance for higher rankings.</p>
+        <!-- Text -->
+        <div class="text-base sm:text-lg lg:text-xl text-gray-200">
+          <p class="mb-4">
+            I am a Junior Software Developer and UI/UX Designer at KNEXEL Technologies. I focus on creating efficient web applications and user-friendly interfaces. My technical strengths include HTML, JavaScript, Python, and database management, alongside strong design skills in Figma.
+          </p>
+          <p>
+            I graduated from Eyrice Village Complete Secondary School, and I continuously refine my skills in full-stack development and design. I value clean code, intuitive design, and collaborative development.
+          </p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+    <!-- END ABOUT SECTION -->
 
-  <!-- ============================= -->
-  <!-- Contact Section -->
-  <!-- ============================= -->
-  <section id="contact" class="py-20 bg-white">
-    <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-12" data-aos="fade-up">Contact Us</h2>
-      <div class="max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-        <form id="contactForm" class="space-y-4" novalidate>
-          <!-- Honeypot field for spam protection (hidden from users) -->
-          <div class="hidden">
-            <label for="website">Website</label>
-            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience" class="bg-gray-900 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-10 text-center text-red-500">Professional Experience</h2>
+      <div class="max-w-6xl mx-auto space-y-14">
+
+        <!-- KNEXEL: Junior Software Developer -->
+        <div class="flex flex-col md:flex-row md:justify-between bg-black p-6 rounded-xl shadow-md hover:shadow-lg transition">
+          <div class="md:w-1/3">
+            <h3 class="text-2xl font-semibold text-gray-200">Junior Software Developer</h3>
+            <p class="text-gray-400">KNEXEL Technologies</p>
+            <p class="text-gray-500">Baku, Azerbaijan</p>
+            <p class="text-gray-500">2023 – 2025</p>
           </div>
+          <div class="md:w-2/3 mt-4 md:mt-0">
+            <ul class="list-disc list-inside space-y-2 text-base sm:text-lg text-gray-200">
+              <li>Built and maintained web applications using HTML, JavaScript (Node.js), and Python.</li>
+              <li>Created RESTful APIs and integrated third-party services to automate workflows.</li>
+              <li>Collaborated in Agile teams, conducted code reviews, and ensured code quality.</li>
+              <li>Deployed applications using Docker containers and managed them on AWS and Heroku.</li>
+            </ul>
+          </div>
+        </div>
+        <!-- End Junior Software Developer -->
 
-          <!-- Name Field -->
+        <!-- KNEXEL: UI/UX Designer -->
+        <div class="flex flex-col md:flex-row md:justify-between bg-black p-6 rounded-xl shadow-md hover:shadow-lg transition">
+          <div class="md:w-1/3">
+            <h3 class="text-2xl font-semibold text-gray-200">UI/UX Designer</h3>
+            <p class="text-gray-400">KNEXEL Technologies</p>
+            <p class="text-gray-500">Baku, Azerbaijan</p>
+            <p class="text-gray-500">2024 – 2025</p>
+          </div>
+          <div class="md:w-2/3 mt-4 md:mt-0">
+            <ul class="list-disc list-inside space-y-2 text-base sm:text-lg text-gray-200">
+              <li>Designed responsive user interfaces with Figma, focusing on usability and accessibility.</li>
+              <li>Conducted user testing and iterated on designs to improve user satisfaction.</li>
+              <li>Created design systems with reusable components, reducing development time.</li>
+              <li>Collaborated with developers to ensure accurate implementation of design specifications.</li>
+            </ul>
+          </div>
+        </div>
+        <!-- End UI/UX Designer -->
+
+      </div>
+    </section>
+    <!-- END EXPERIENCE SECTION -->
+
+    <!-- EDUCATION SECTION -->
+    <section id="education" class="max-w-4xl mx-auto py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-10 text-center text-red-500">Education & Training</h2>
+      <div class="space-y-10">
+        <!-- Peerstack Academy -->
+        <div class="flex flex-col md:flex-row md:justify-between bg-gray-900 p-6 rounded-xl shadow-md hover:shadow-lg transition">
+          <div class="md:w-1/3">
+            <h3 class="text-2xl font-semibold text-gray-200">Full Stack Development</h3>
+            <p class="text-gray-400">Peerstack Academy</p>
+            <p class="text-gray-500">Apr 2025 – Apr 2026</p>
+            <p class="text-gray-500">Baku, Azerbaijan</p>
+          </div>
+          <div class="md:w-2/3 mt-4 md:mt-0">
+            <ul class="list-disc list-inside space-y-2 text-base sm:text-lg text-gray-200">
+              <li>Developed web apps using React, Node.js, Express, and MongoDB.</li>
+              <li>Integrated RESTful APIs and implemented authentication (JWT).</li>
+              <li>Deployed applications on AWS EC2 and Heroku using Docker.</li>
+              <li>Collaborated in Agile teams, managed code with Git/GitHub.</li>
+            </ul>
+          </div>
+        </div>
+        <!-- End Peerstack Academy -->
+
+        <!-- Eyrice Village School -->
+        <div class="flex flex-col md:flex-row md:justify-between bg-gray-900 p-6 rounded-xl shadow-md hover:shadow-lg transition pt-8">
+          <div class="md:w-1/3">
+            <h3 class="text-2xl font-semibold text-gray-200">Secondary Education</h3>
+            <p class="text-gray-400">Eyrice Village Complete Secondary School</p>
+            <p class="text-gray-500">2013 – 2024</p>
+            <p class="text-gray-500">Baku, Azerbaijan</p>
+            <p class="text-gray-500">EQF Level 4</p>
+          </div>
+          <div class="md:w-2/3 mt-4 md:mt-0">
+            <p class="text-base sm:text-lg lg:text-xl text-gray-200">
+              Completed a rigorous curriculum with emphasis on STEM subjects and languages. Participated in science fairs and coding clubs, building a strong foundation for technology studies.
+            </p>
+          </div>
+        </div>
+        <!-- End Eyrice Village School -->
+      </div>
+    </section>
+    <!-- END EDUCATION SECTION -->
+
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="bg-black py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-10 text-center text-red-500">Skills & Proficiencies</h2>
+      <div class="space-y-12">
+        <!-- Technical Skills -->
+        <div>
+          <h3 class="text-2xl font-semibold mb-4 text-gray-200">Technical Skills</h3>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-base sm:text-lg text-gray-200">
+            <li><i class="fas fa-code text-red-500 mr-2"></i>HTML</li>
+            <li><i class="fas fa-code text-red-500 mr-2"></i>JavaScript</li>
+            <li><i class="fas fa-code text-red-500 mr-2"></i>Python</li>
+            <li><i class="fas fa-code text-red-500 mr-2"></i>C#</li>
+            <li><i class="fas fa-paint-brush text-red-500 mr-2"></i>Figma</li>
+            <li><i class="fas fa-database text-red-500 mr-2"></i>PostgreSQL</li>
+            <li><i class="fas fa-database text-red-500 mr-2"></i>MySQL</li>
+            <li><i class="fas fa-robot text-red-500 mr-2"></i>Machine Learning</li>
+          </ul>
+        </div>
+        <!-- End Technical Skills -->
+        <!-- Language -->
+        <div>
+          <h3 class="text-2xl font-semibold mb-4 text-gray-200">Language</h3>
+          <p class="text-base sm:text-lg text-gray-200"><i class="fas fa-language text-red-500 mr-2"></i>English (Fluent, B2)</p>
+        </div>
+        <!-- End Language -->
+      </div>
+    </section>
+    <!-- END SKILLS SECTION -->
+
+    <!-- PROJECT SECTION -->
+    <section id="project" class="bg-gray-900 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-10 text-center text-red-500">Featured Project</h2>
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-black p-6 rounded-xl shadow-md hover:shadow-lg transition">
+          <h3 class="text-2xl font-semibold text-gray-200 mb-2">Vacation Tracking System</h3>
+          <p class="text-gray-400 mb-4">Personal Project | <a href="https://emplo.up.railway.app" target="_blank" class="text-red-500 hover:text-red-700 transition">emplo.up.railway.app</a></p>
+          <p class="text-gray-200 mb-4">
+            A simple system to manage leave requests and approvals. Built with React, Node.js, and PostgreSQL. Provides real-time notifications and analytics.
+          </p>
+          <ul class="list-disc list-inside space-y-2 text-base sm:text-lg text-gray-200 mb-4">
+            <li>Frontend: React and Tailwind CSS for responsive design.</li>
+            <li>Backend: Node.js and Express with PostgreSQL database.</li>
+            <li>Email notifications implemented with SendGrid.</li>
+            <li>Deployed on Railway using Docker for containerization.</li>
+          </ul>
+          <div class="flex justify-end">
+            <a href="https://emplo.up.railway.app" target="_blank" class="text-red-500 hover:text-red-700 font-medium">Visit Site <i class="fas fa-external-link-alt ml-1"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END PROJECT SECTION -->
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="bg-black py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-center text-red-500">Contact Me</h2>
+      <div class="max-w-2xl mx-auto">
+        <!-- Contact Form -->
+        <form id="contactForm" class="space-y-6">
+          <input type="text" name="website" id="website" class="hidden" tabindex="-1" autocomplete="off" />
+
+          <!-- Name -->
           <div>
-            <label for="name" class="block text-lg font-medium mb-1">Name <span aria-hidden="true" class="text-red-600">*</span></label>
-            <input type="text" id="name" name="name" required
-                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                   aria-required="true" aria-describedby="nameError" />
-            <p id="nameError" class="mt-1 text-sm text-red-600 hidden">Please enter your name.</p>
+            <label for="name" class="block text-base sm:text-lg font-medium mb-2 text-gray-200">Name</label>
+            <input id="name" name="name" type="text" required class="w-full bg-gray-800 border-gray-700 border-2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-200" />
+            <div id="nameError" class="text-red-600 text-sm hidden">Please enter your name.</div>
           </div>
 
-          <!-- Email Field -->
+          <!-- Email -->
           <div>
-            <label for="email" class="block text-lg font-medium mb-1">Email <span aria-hidden="true" class="text-red-600">*</span></label>
-            <input type="email" id="email" name="email" required
-                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                   aria-required="true" aria-describedby="emailError" />
-            <p id="emailError" class="mt-1 text-sm text-red-600 hidden">Please enter a valid email.</p>
+            <label for="email" class="block text-base sm:text-lg font-medium mb-2 text-gray-200">Email</label>
+            <input id="email" name="email" type="email" required class="w-full bg-gray-800 border-gray-700 border-2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-200" />
+            <div id="emailError" class="text-red-600 text-sm hidden">Please enter a valid email.</div>
           </div>
 
-          <!-- Message Field -->
+          <!-- Subject -->
           <div>
-            <label for="message" class="block text-lg font-medium mb-1">Message <span aria-hidden="true" class="text-red-600">*</span></label>
-            <textarea id="message" name="message" rows="5" required
-                      class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                      aria-required="true" aria-describedby="messageError"></textarea>
-            <p id="messageError" class="mt-1 text-sm text-red-600 hidden">Please enter your message.</p>
+            <label for="subject" class="block text-base sm:text-lg font-medium mb-2 text-gray-200">Subject</label>
+            <input id="subject" name="subject" type="text" required class="w-full bg-gray-800 border-gray-700 border-2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-200" />
+            <div id="subjectError" class="text-red-600 text-sm hidden">Please enter a subject.</div>
           </div>
 
-          <!-- Submit Button -->
+          <!-- Message -->
           <div>
-            <button type="submit"
-                    class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition"
-                    id="submitButton">Send Message</button>
+            <label for="message" class="block text-base sm:text-lg font-medium mb-2 text-gray-200">Message</label>
+            <textarea id="message" name="message" required class="w-full bg-gray-800 border-gray-700 border-2 p-3 rounded-lg h-40 focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-200"></textarea>
+            <div id="messageError" class="text-red-600 text-sm hidden">Please enter your message.</div>
           </div>
 
-          <!-- Status messages -->
-          <p id="formStatus" class="mt-4 text-center text-lg"></p>
+          <!-- Submit -->
+          <div class="text-center">
+            <button id="submitButton" type="submit" class="bg-red-500 hover:bg-red-700 text-black px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold focus:outline-none focus:ring-2 focus:ring-red-500 transition">
+              Send Message
+            </button>
+          </div>
+
+          <!-- Form Status -->
+          <p id="formStatus" class="text-center text-sm text-gray-400 mt-2"></p>
         </form>
+
+        <!-- Direct Contact Info -->
+        <div class="mt-12 text-center text-base sm:text-lg space-y-4 text-gray-200">
+          <p class="flex justify-center items-center">
+            <i class="fas fa-envelope mr-2 text-red-500"></i>
+            <a href="mailto:javidan.javadov@gmail.com" class="hover:text-red-500 transition">javidan.javadov@gmail.com</a>
+          </p>
+          <p class="flex justify-center items-center">
+            <i class="fas fa-phone mr-2 text-red-500"></i>
+            <a href="tel:+994503738788" class="hover:text-red-500 transition">(+994) 50 373-8788</a>
+          </p>
+          <p class="flex justify-center items-center">
+            <i class="fab fa-linkedin mr-2 text-red-500"></i>
+            <a href="https://www.linkedin.com/in/javidanjavadov/" target="_blank" class="hover:text-red-500 transition">linkedin.com/in/javidanjavadov</a>
+          </p>
+          <p class="flex justify-center items-center">
+            <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
+            Xudu Məmmədov 82, Block 5C, Floor 14, Apt. 61, Baku City, AZ1123, Azerbaijan
+          </p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+    <!-- END CONTACT SECTION -->
 
-  <!-- ============================= -->
-  <!-- Footer -->
-  <!-- ============================= -->
-  <footer class="bg-gray-900 text-white py-6">
-    <div class="container mx-auto px-4 text-center">
-      <p>&copy; 2025 MyWebsite. All rights reserved.</p>
-    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-black py-8 text-center text-sm text-gray-500 border-t border-gray-800">
+    <p>&copy; 2025 Javidan Javadov. All rights reserved.</p>
+    <p>Designed & Developed by Javidan Javadov</p>
+    <p class="mt-2">
+      <a href="#" class="text-red-500 hover:text-red-700 transition mx-2"><i class="fab fa-github"></i></a>
+      <a href="#" class="text-red-500 hover:text-red-700 transition mx-2"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="text-red-500 hover:text-red-700 transition mx-2"><i class="fab fa-instagram"></i></a>
+    </p>
   </footer>
+  <!-- END FOOTER -->
 
-  <!-- ============================= -->
-  <!-- Scripts -->
-  <!-- ============================= -->
-  <!-- AOS (Animate On Scroll) -->
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <!-- JAVASCRIPT: FORM VALIDATION & SUBMISSION -->
   <script>
-    AOS.init({
-      duration: 800,
-      once: true
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('contactForm');
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const subjectInput = document.getElementById('subject');
+      const messageInput = document.getElementById('message');
+
+      const nameError = document.getElementById('nameError');
+      const emailError = document.getElementById('emailError');
+      const subjectError = document.getElementById('subjectError');
+      const messageError = document.getElementById('messageError');
+
+      const formStatus = document.getElementById('formStatus');
+      const honeypot = document.getElementById('website');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        let valid = true;
+
+        // Email regex
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Name
+        if (nameInput.value.trim() === '') {
+          nameError.classList.remove('hidden');
+          valid = false;
+        } else {
+          nameError.classList.add('hidden');
+        }
+
+        // Email
+        if (!emailPattern.test(emailInput.value.trim())) {
+          emailError.classList.remove('hidden');
+          valid = false;
+        } else {
+          emailError.classList.add('hidden');
+        }
+
+        // Subject
+        if (subjectInput.value.trim() === '') {
+          subjectError.classList.remove('hidden');
+          valid = false;
+        } else {
+          subjectError.classList.add('hidden');
+        }
+
+        // Message
+        if (messageInput.value.trim() === '') {
+          messageError.classList.remove('hidden');
+          valid = false;
+        } else {
+          messageError.classList.add('hidden');
+        }
+
+        // Honeypot
+        if (honeypot.value.trim() !== '') {
+          valid = false;
+        }
+
+        if (!valid) {
+          formStatus.textContent = 'Please fix errors before submitting.';
+          formStatus.classList.remove('text-green-600');
+          formStatus.classList.add('text-red-600');
+          return;
+        }
+
+        // Mock submission
+        formStatus.textContent = 'Sending...';
+        formStatus.classList.remove('text-red-600');
+        formStatus.classList.add('text-red-500');
+
+        setTimeout(function () {
+          formStatus.textContent = 'Message sent successfully!';
+          formStatus.classList.remove('text-red-500');
+          formStatus.classList.add('text-green-500');
+          form.reset();
+        }, 1500);
+      });
     });
   </script>
-
-  <!-- Mobile menu toggle -->
-  <script>
-    document.getElementById('mobile-menu-button').addEventListener('click', () => {
-      const menu = document.getElementById('mobile-menu');
-      menu.classList.toggle('hidden');
-    });
-  </script>
-
-  <!-- Form handling script -->
-  <script src="js/main.js"></script>
-
+  <!-- END JAVASCRIPT -->
 </body>
 </html>

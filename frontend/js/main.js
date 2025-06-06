@@ -1,6 +1,4 @@
 
-// frontend/js/main.js
-
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('contactForm');
   const nameInput = document.getElementById('name');
@@ -10,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const statusText = document.getElementById('formStatus');
   const submitButton = document.getElementById('submitButton');
 
-  // Utility: Show or hide error message
   const toggleError = (inputEl, errorElId, show, message = '') => {
     const errorEl = document.getElementById(errorElId);
     if (show) {
@@ -26,19 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Reset status
     statusText.textContent = '';
     statusText.className = '';
 
-    // Clear previous errors
     toggleError(nameInput, 'nameError', false);
     toggleError(emailInput, 'emailError', false);
     toggleError(messageInput, 'messageError', false);
 
-    // Front-end validation
     let valid = true;
     if (honeypotInput.value.trim() !== '') {
-      // Bot detected; just silently return
       return;
     }
     if (nameInput.value.trim() === '') {
@@ -49,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
       toggleError(emailInput, 'emailError', true, 'Please enter your email.');
       valid = false;
     } else {
-      // Basic email pattern
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(emailInput.value.trim())) {
         toggleError(emailInput, 'emailError', true, 'Please enter a valid email address.');
@@ -61,15 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
       valid = false;
     }
 
-    if (!valid) {
-      return;
-    }
+    if (!valid) return;
 
-    // Disable the button to prevent multiple submissions
     submitButton.disabled = true;
     submitButton.textContent = 'Sending...';
 
-    // Gather form data
     const formData = {
       name: nameInput.value.trim(),
       email: emailInput.value.trim(),
@@ -77,26 +65,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     try {
-      const response = await fetch('https://my-personal-website-dr5o.onrender.com/api/contact', {
-
+      const response = await fetch('https://my-personal-website-backend.onrender.com/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
 
-
-      
       const result = await response.json();
-
       if (response.ok) {
-        // Success
         statusText.textContent = 'Thank you! Your message has been sent.';
         statusText.classList.add('text-green-600');
         form.reset();
       } else {
-        // Server returned an error
         statusText.textContent = result.error || 'An error occurred. Please try again later.';
         statusText.classList.add('text-red-600');
       }
@@ -105,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
       statusText.classList.add('text-red-600');
     } finally {
       submitButton.disabled = false;
-      submitButton.textContent = 'Send Message';
+      submitButton.textContent = 'Send';
     }
   });
 });
