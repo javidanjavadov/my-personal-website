@@ -27,6 +27,16 @@ app.get("/", (req, res) => {
   res.json({ message: "Backend is running" });
 });
 
+// Escape helper (prevents HTML injection)
+function escapeHtml(str = "") {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 // Create Resend client
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -80,12 +90,55 @@ app.post(
 
     try {
       await resend.emails.send({
-        // Works immediately without domain verification:
         from: "Website Contact <onboarding@resend.dev>",
-        to: process.env.RECIPIENT_EMAIL, // keep your existing env name
-        reply_to: email, // so you can reply directly
-        subject: subject ? subject : `New Contact Form Submission from ${name}`,
-        text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject || ""}\n\nMessage:\n${message}`,
+        to: process.env.RECIPIENT_EMAIL,
+        reply_to: email,
+        subject: subject ? `📩 ${subject}` : `📩 New message from ${name}`,
+
+        // Plain-text fallback
+        text:
+          `New contact form message\n\n` +
+          `Name: ${name}\n` +
+          `Email: ${email}\n` +
+          `Subject: ${subject || "-"}\n\n` +
+          `Message:\n${message}\n`,
+
+        // HTML version (Gmail will show this nicely)
+        html: `
+          <div style="font-family: Arial, sans-serif; line-height:1.5; color:#111;">
+            <h2 style="margin:0 0 12px;">New Contact Form Message</h2>
+
+            <table style="border-collapse:collapse; width:100%; max-width:640px;">
+              <tr>
+                <td style="padding:8px 10px; border:1px solid #ddd; width:140px;"><b>Name</b></td>
+                <td style="padding:8px 10px; border:1px solid #ddd;">${escapeHtml(
+                  name,
+                )}</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 10px; border:1px solid #ddd;"><b>Email</b></td>
+                <td style="padding:8px 10px; border:1px solid #ddd;">
+                  <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:8px 10px; border:1px solid #ddd;"><b>Subject</b></td>
+                <td style="padding:8px 10px; border:1px solid #ddd;">${escapeHtml(
+                  subject || "-",
+                )}</td>
+              </tr>
+            </table>
+
+            <h3 style="margin:18px 0 8px;">Message</h3>
+            <div style="padding:12px; border:1px solid #ddd; border-radius:8px; background:#f9f9f9; white-space:pre-wrap;">
+${escapeHtml(message)}
+            </div>
+
+            <p style="margin:18px 0 0; font-size:12px; color:#666;">
+              Reply to this email to respond to <b>${escapeHtml(name)}</b>.
+            </p>
+          </div>
+        `,
       });
 
       return res.status(200).json({ message: "Email sent successfully" });
