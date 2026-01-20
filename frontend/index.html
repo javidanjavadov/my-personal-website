@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:title" content="Javidan Javadov | Portfolio & CV" />
     <meta
       property="og:description"
@@ -30,10 +32,10 @@
     />
 
     <!-- Font Awesome for icons -->
-    <script
-      src="https://kit.fontawesome.com/a076d05399.js"
-      crossorigin="anonymous"
-    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
 
     <style>
       /* styles.css */
@@ -704,7 +706,6 @@
             return;
           }
 
-          // Prepare payload
           const payload = {
             name: nameInput.value.trim(),
             email: emailInput.value.trim(),
@@ -713,23 +714,36 @@
             website: honeypotInput.value.trim(),
           };
 
-          // Logs for debugging
           console.log("✅ Submitting contact form");
           console.log("➡️ API URL:", API_URL);
           console.log("📦 Payload:", payload);
 
-          // Disable button
+          // UI
           submitButton.disabled = true;
           submitButton.textContent = "Sending...";
+
+          // TIMEOUT: stop hanging forever
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => {
+            controller.abort();
+          }, 15000); // 15 seconds
+
+          console.time("contact_request_time");
 
           try {
             const response = await fetch(API_URL, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(payload),
+              signal: controller.signal,
+              mode: "cors",
             });
 
             console.log("✅ Response status:", response.status);
+            console.log(
+              "✅ Response content-type:",
+              response.headers.get("content-type"),
+            );
 
             const raw = await response.text();
             console.log("✅ Raw response:", raw);
@@ -737,27 +751,36 @@
             let result = {};
             try {
               result = JSON.parse(raw);
-            } catch (err) {
-              console.log("⚠️ Response is not JSON:", err);
-            }
+            } catch (_) {}
 
             if (response.ok) {
-              statusText.textContent = "Thank you! Your message has been sent.";
+              statusText.textContent =
+                "✅ Thank you! Your message has been sent.";
               statusText.classList.remove("text-gray-400");
               statusText.classList.add("text-green-500");
               form.reset();
             } else {
               statusText.textContent =
-                result.error || "Failed to send message.";
+                result.error || "❌ Failed to send message.";
               statusText.classList.remove("text-gray-400");
               statusText.classList.add("text-red-600");
             }
           } catch (err) {
             console.log("🔥 Fetch error:", err);
-            statusText.textContent = "Network error. Backend not reachable.";
+
+            if (err.name === "AbortError") {
+              statusText.textContent =
+                "❌ Timeout: server did not respond (15s).";
+            } else {
+              statusText.textContent =
+                "❌ Network error: request failed (check CORS/backend).";
+            }
+
             statusText.classList.remove("text-gray-400");
             statusText.classList.add("text-red-600");
           } finally {
+            clearTimeout(timeoutId);
+            console.timeEnd("contact_request_time");
             submitButton.disabled = false;
             submitButton.textContent = "Send Message";
           }
