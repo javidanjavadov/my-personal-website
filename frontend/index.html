@@ -740,10 +740,6 @@
             });
 
             console.log("✅ Response status:", response.status);
-            console.log(
-              "✅ Response content-type:",
-              response.headers.get("content-type"),
-            );
 
             const raw = await response.text();
             console.log("✅ Raw response:", raw);
@@ -780,7 +776,6 @@
             statusText.classList.add("text-red-600");
           } finally {
             clearTimeout(timeoutId);
-            console.timeEnd("contact_request_time");
             submitButton.disabled = false;
             submitButton.textContent = "Send Message";
           }
