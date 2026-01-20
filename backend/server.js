@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const { body, validationResult } = require("express-validator");
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
 // Load .env variables
 dotenv.config();
@@ -26,6 +26,9 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.json({ message: "Backend is running" });
 });
+
+// Create Resend client
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // POST /api/contact
 app.post(
@@ -73,40 +76,21 @@ app.post(
       return res.status(400).json({ error: errors.array()[0].msg });
     }
 
-    // Extract sanitized data
     const { name, email, subject, message } = req.body;
 
-    // Create Nodemailer transporter
-    let transporter;
     try {
-      transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: parseInt(process.env.SMTP_PORT, 10),
-        secure: process.env.SMTP_SECURE === "true",
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS,
-        },
+      await resend.emails.send({
+        // Works immediately without domain verification:
+        from: "Website Contact <onboarding@resend.dev>",
+        to: process.env.RECIPIENT_EMAIL, // keep your existing env name
+        reply_to: email, // so you can reply directly
+        subject: subject ? subject : `New Contact Form Submission from ${name}`,
+        text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject || ""}\n\nMessage:\n${message}`,
       });
-    } catch (err) {
-      console.error("Failed to create transporter:", err);
-      return res.status(500).json({ error: "Mailer setup failed" });
-    }
 
-    // Email options
-    const mailOptions = {
-      from: `"Website Contact" <${process.env.SMTP_USER}>`,
-      to: process.env.RECIPIENT_EMAIL,
-      subject: subject ? subject : `New Contact Form Submission from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`,
-    };
-
-    // Send email
-    try {
-      await transporter.sendMail(mailOptions);
       return res.status(200).json({ message: "Email sent successfully" });
     } catch (err) {
-      console.error("Error sending email:", err);
+      console.error("Resend error:", err);
       return res.status(500).json({ error: "Failed to send email" });
     }
   },
