@@ -611,203 +611,160 @@
 
     <!-- FORM VALIDATION SCRIPT -->
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener("DOMContentLoaded", () => {
         const form = document.getElementById("contactForm");
+
         const nameInput = document.getElementById("name");
         const emailInput = document.getElementById("email");
         const subjectInput = document.getElementById("subject");
         const messageInput = document.getElementById("message");
+        const honeypotInput = document.getElementById("website");
 
         const nameError = document.getElementById("nameError");
         const emailError = document.getElementById("emailError");
         const subjectError = document.getElementById("subjectError");
         const messageError = document.getElementById("messageError");
 
-        const formStatus = document.getElementById("formStatus");
-        const honeypot = document.getElementById("website");
-
-        form.addEventListener("submit", function (e) {
-          e.preventDefault();
-          let valid = true;
-
-          // Email regex
-          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-          // Name
-          if (nameInput.value.trim() === "") {
-            nameError.classList.remove("hidden");
-            valid = false;
-          } else {
-            nameError.classList.add("hidden");
-          }
-
-          // Email
-          if (!emailPattern.test(emailInput.value.trim())) {
-            emailError.classList.remove("hidden");
-            valid = false;
-          } else {
-            emailError.classList.add("hidden");
-          }
-
-          // Subject
-          if (subjectInput.value.trim() === "") {
-            subjectError.classList.remove("hidden");
-            valid = false;
-          } else {
-            subjectError.classList.add("hidden");
-          }
-
-          // Message
-          if (messageInput.value.trim() === "") {
-            messageError.classList.remove("hidden");
-            valid = false;
-          } else {
-            messageError.classList.add("hidden");
-          }
-
-          // Honeypot
-          if (honeypot.value.trim() !== "") {
-            valid = false;
-          }
-
-          if (!valid) {
-            formStatus.textContent = "Please fix errors before submitting.";
-            formStatus.classList.remove("text-green-600");
-            formStatus.classList.add("text-red-600");
-            return;
-          }
-
-          // Mock submission
-          formStatus.textContent = "Sending...";
-          formStatus.classList.remove("text-red-600");
-          formStatus.classList.add("text-red-500");
-
-          setTimeout(function () {
-            formStatus.textContent = "Message sent successfully!";
-            formStatus.classList.remove("text-red-500");
-            formStatus.classList.add("text-green-500");
-            form.reset();
-          }, 1500);
-        });
-      });
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("contactForm");
-        const nameInput = document.getElementById("name");
-        const emailInput = document.getElementById("email");
-        const messageInput = document.getElementById("message");
-        const honeypotInput = document.getElementById("website");
         const statusText = document.getElementById("formStatus");
         const submitButton = document.getElementById("submitButton");
 
-        const toggleError = (inputEl, errorElId, show, message = "") => {
-          const errorEl = document.getElementById(errorElId);
+        const API_URL =
+          "https://my-personal-website-dr5o.onrender.com/api/contact";
+
+        function showError(errorEl, inputEl, show, msg) {
           if (show) {
-            errorEl.textContent = message;
+            errorEl.textContent = msg;
             errorEl.classList.remove("hidden");
             inputEl.classList.add("border-red-600");
           } else {
             errorEl.classList.add("hidden");
             inputEl.classList.remove("border-red-600");
           }
-        };
+        }
 
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
 
+          // Reset UI
           statusText.textContent = "";
-          statusText.className = "";
+          statusText.className = "text-center text-sm text-gray-400 mt-2";
 
-          toggleError(nameInput, "nameError", false);
-          toggleError(emailInput, "emailError", false);
-          toggleError(messageInput, "messageError", false);
+          showError(nameError, nameInput, false, "");
+          showError(emailError, emailInput, false, "");
+          showError(subjectError, subjectInput, false, "");
+          showError(messageError, messageInput, false, "");
 
-          let valid = true;
+          // Honeypot (bots)
           if (honeypotInput.value.trim() !== "") {
+            console.log("🤖 Honeypot filled. Bot detected. Cancel submit.");
             return;
           }
+
+          // Validate
+          let valid = true;
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
           if (nameInput.value.trim() === "") {
-            toggleError(
-              nameInput,
-              "nameError",
+            showError(nameError, nameInput, true, "Please enter your name.");
+            valid = false;
+          }
+          if (!emailPattern.test(emailInput.value.trim())) {
+            showError(
+              emailError,
+              emailInput,
               true,
-              "Please enter your name.",
+              "Please enter a valid email.",
             );
             valid = false;
           }
-          if (emailInput.value.trim() === "") {
-            toggleError(
-              emailInput,
-              "emailError",
+          if (subjectInput.value.trim() === "") {
+            showError(
+              subjectError,
+              subjectInput,
               true,
-              "Please enter your email.",
+              "Please enter a subject.",
             );
             valid = false;
-          } else {
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(emailInput.value.trim())) {
-              toggleError(
-                emailInput,
-                "emailError",
-                true,
-                "Please enter a valid email address.",
-              );
-              valid = false;
-            }
           }
           if (messageInput.value.trim() === "") {
-            toggleError(
+            showError(
+              messageError,
               messageInput,
-              "messageError",
               true,
               "Please enter your message.",
             );
             valid = false;
           }
 
-          if (!valid) return;
+          if (!valid) {
+            statusText.textContent = "Please fix errors before submitting.";
+            statusText.classList.remove("text-gray-400");
+            statusText.classList.add("text-red-600");
+            console.log("❌ Validation failed");
+            return;
+          }
 
-          submitButton.disabled = true;
-          submitButton.textContent = "Sending...";
-
-          const formData = {
+          // Prepare payload
+          const payload = {
             name: nameInput.value.trim(),
             email: emailInput.value.trim(),
             subject: subjectInput.value.trim(),
             message: messageInput.value.trim(),
+            website: honeypotInput.value.trim(),
           };
 
-          try {
-            const response = await fetch(
-              "https://my-personal-website-dr5o.onrender.com/api/contact",
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
-              },
-            );
+          // Logs for debugging
+          console.log("✅ Submitting contact form");
+          console.log("➡️ API URL:", API_URL);
+          console.log("📦 Payload:", payload);
 
-            const result = await response.json();
+          // Disable button
+          submitButton.disabled = true;
+          submitButton.textContent = "Sending...";
+
+          try {
+            const response = await fetch(API_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            console.log("✅ Response status:", response.status);
+
+            const raw = await response.text();
+            console.log("✅ Raw response:", raw);
+
+            let result = {};
+            try {
+              result = JSON.parse(raw);
+            } catch (err) {
+              console.log("⚠️ Response is not JSON:", err);
+            }
+
             if (response.ok) {
               statusText.textContent = "Thank you! Your message has been sent.";
-              statusText.classList.add("text-green-600");
+              statusText.classList.remove("text-gray-400");
+              statusText.classList.add("text-green-500");
               form.reset();
             } else {
               statusText.textContent =
-                result.error || "An error occurred. Please try again later.";
+                result.error || "Failed to send message.";
+              statusText.classList.remove("text-gray-400");
               statusText.classList.add("text-red-600");
             }
           } catch (err) {
-            statusText.textContent =
-              "An error occurred. Please try again later.";
+            console.log("🔥 Fetch error:", err);
+            statusText.textContent = "Network error. Backend not reachable.";
+            statusText.classList.remove("text-gray-400");
             statusText.classList.add("text-red-600");
           } finally {
             submitButton.disabled = false;
-            submitButton.textContent = "Send";
+            submitButton.textContent = "Send Message";
           }
         });
       });
     </script>
+
     <!-- END FORM VALIDATION SCRIPT -->
   </body>
 </html>
